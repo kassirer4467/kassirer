@@ -16,11 +16,16 @@
   </header>
 
   <main class="page">
-    <h1 class="visually-hidden">Gallery</h1>
-    <nav class="pager" aria-label="Gallery pages"></nav>
-    <ul id="gallery" class="grid"></ul>
-    <p id="status" class="status" role="status">Loading paintings…</p>
-    <nav class="pager" aria-label="Gallery pages"></nav>
+    <div class="layout" id="layout">
+      <nav id="gallery-menu" class="side" aria-label="Galleries"></nav>
+      <section>
+        <h1 id="gallery-title" class="visually-hidden">Gallery</h1>
+        <nav class="pager" aria-label="Gallery pages"></nav>
+        <ul id="gallery" class="grid"></ul>
+        <p id="status" class="status" role="status">Loading paintings…</p>
+        <nav class="pager" aria-label="Gallery pages"></nav>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer" id="site-footer"></footer>

@@ -1,125 +1,138 @@
 {
   "perPage": 16,
-  "paintings": [
+  "menuTitle": "Works",
+  "galleries": [
     {
-      "image": "kassirer-01.jpg",
-      "title": "Sample Painting 01",
-      "caption": "Oil on canvas | 80 × 60 cm | 2021",
-      "alt": "Abstract sample painting 01"
+      "id": "2025",
+      "title": "2025 – 2026",
+      "paintings": [
+        {
+          "image": "kassirer-01.jpg",
+          "title": "Sample Painting 01",
+          "caption": "Oil on canvas | 80 × 60 cm | 2021",
+          "alt": "Abstract sample painting 01"
+        },
+        {
+          "image": "kassirer-02.jpg",
+          "title": "Sample Painting 02",
+          "caption": "Oil on canvas | 60 × 80 cm | 2022",
+          "alt": "Abstract sample painting 02"
+        },
+        {
+          "image": "kassirer-03.jpg",
+          "title": "הנס הגדול",
+          "caption": "שמן על בד | 120/100 ס\"מ | 2026 | אוסף פרטי",
+          "alt": "ציור לדוגמה"
+        },
+        {
+          "image": "kassirer-04.jpg",
+          "title": "Sample Painting 04",
+          "caption": "Oil on canvas | 90 × 55 cm | 2024",
+          "alt": "Abstract sample painting 04"
+        },
+        {
+          "image": "kassirer-05.jpg",
+          "title": "Sample Painting 05",
+          "caption": "Oil on canvas | 55 × 75 cm | 2025\nPrivate collection",
+          "alt": "Abstract sample painting 05"
+        },
+        {
+          "image": "kassirer-06.jpg",
+          "title": "Sample Painting 06",
+          "caption": "Oil on canvas | 70 × 50 cm | 2020",
+          "alt": "Abstract sample painting 06"
+        },
+        {
+          "image": "kassirer-07.jpg",
+          "title": "Sample Painting 07",
+          "caption": "Oil on canvas | 50 × 70 cm | 2021",
+          "alt": "Abstract sample painting 07"
+        },
+        {
+          "image": "kassirer-08.jpg",
+          "title": "Sample Painting 08",
+          "caption": "Oil on canvas | 80 × 80 cm | 2022",
+          "alt": "Abstract sample painting 08"
+        },
+        {
+          "image": "kassirer-09.jpg",
+          "title": "Sample Painting 09",
+          "caption": "Oil on canvas | 100 × 60 cm | 2023",
+          "alt": "Abstract sample painting 09"
+        },
+        {
+          "image": "kassirer-10.jpg",
+          "title": "Sample Painting 10",
+          "caption": "Oil on canvas | 60 × 75 cm | 2024",
+          "alt": "Abstract sample painting 10"
+        },
+        {
+          "image": "kassirer-11.jpg",
+          "title": "Sample Painting 11",
+          "caption": "Oil on canvas | 80 × 60 cm | 2025",
+          "alt": "Abstract sample painting 11"
+        },
+        {
+          "image": "kassirer-12.jpg",
+          "title": "Sample Painting 12",
+          "caption": "Oil on canvas | 60 × 80 cm | 2020",
+          "alt": "Abstract sample painting 12"
+        },
+        {
+          "image": "kassirer-13.jpg",
+          "title": "Sample Painting 13",
+          "caption": "Oil on canvas | 75 × 75 cm | 2021",
+          "alt": "Abstract sample painting 13"
+        },
+        {
+          "image": "kassirer-14.jpg",
+          "title": "Sample Painting 14",
+          "caption": "Oil on canvas | 90 × 55 cm | 2022",
+          "alt": "Abstract sample painting 14"
+        },
+        {
+          "image": "kassirer-15.jpg",
+          "title": "Sample Painting 15",
+          "caption": "Oil on canvas | 55 × 75 cm | 2023",
+          "alt": "Abstract sample painting 15"
+        },
+        {
+          "image": "kassirer-16.jpg",
+          "title": "Sample Painting 16",
+          "caption": "Oil on canvas | 70 × 50 cm | 2024",
+          "alt": "Abstract sample painting 16"
+        }
+      ]
     },
     {
-      "image": "kassirer-02.jpg",
-      "title": "Sample Painting 02",
-      "caption": "Oil on canvas | 60 × 80 cm | 2022",
-      "alt": "Abstract sample painting 02"
-    },
-    {
-      "image": "kassirer-03.jpg",
-      "title": "הנס הגדול",
-      "caption": "שמן על בד | 120/100 ס\"מ | 2026 | אוסף פרטי",
-      "alt": "ציור לדוגמה"
-    },
-    {
-      "image": "kassirer-04.jpg",
-      "title": "Sample Painting 04",
-      "caption": "Oil on canvas | 90 × 55 cm | 2024",
-      "alt": "Abstract sample painting 04"
-    },
-    {
-      "image": "kassirer-05.jpg",
-      "title": "Sample Painting 05",
-      "caption": "Oil on canvas | 55 × 75 cm | 2025\nPrivate collection",
-      "alt": "Abstract sample painting 05"
-    },
-    {
-      "image": "kassirer-06.jpg",
-      "title": "Sample Painting 06",
-      "caption": "Oil on canvas | 70 × 50 cm | 2020",
-      "alt": "Abstract sample painting 06"
-    },
-    {
-      "image": "kassirer-07.jpg",
-      "title": "Sample Painting 07",
-      "caption": "Oil on canvas | 50 × 70 cm | 2021",
-      "alt": "Abstract sample painting 07"
-    },
-    {
-      "image": "kassirer-08.jpg",
-      "title": "Sample Painting 08",
-      "caption": "Oil on canvas | 80 × 80 cm | 2022",
-      "alt": "Abstract sample painting 08"
-    },
-    {
-      "image": "kassirer-09.jpg",
-      "title": "Sample Painting 09",
-      "caption": "Oil on canvas | 100 × 60 cm | 2023",
-      "alt": "Abstract sample painting 09"
-    },
-    {
-      "image": "kassirer-10.jpg",
-      "title": "Sample Painting 10",
-      "caption": "Oil on canvas | 60 × 75 cm | 2024",
-      "alt": "Abstract sample painting 10"
-    },
-    {
-      "image": "kassirer-11.jpg",
-      "title": "Sample Painting 11",
-      "caption": "Oil on canvas | 80 × 60 cm | 2025",
-      "alt": "Abstract sample painting 11"
-    },
-    {
-      "image": "kassirer-12.jpg",
-      "title": "Sample Painting 12",
-      "caption": "Oil on canvas | 60 × 80 cm | 2020",
-      "alt": "Abstract sample painting 12"
-    },
-    {
-      "image": "kassirer-13.jpg",
-      "title": "Sample Painting 13",
-      "caption": "Oil on canvas | 75 × 75 cm | 2021",
-      "alt": "Abstract sample painting 13"
-    },
-    {
-      "image": "kassirer-14.jpg",
-      "title": "Sample Painting 14",
-      "caption": "Oil on canvas | 90 × 55 cm | 2022",
-      "alt": "Abstract sample painting 14"
-    },
-    {
-      "image": "kassirer-15.jpg",
-      "title": "Sample Painting 15",
-      "caption": "Oil on canvas | 55 × 75 cm | 2023",
-      "alt": "Abstract sample painting 15"
-    },
-    {
-      "image": "kassirer-16.jpg",
-      "title": "Sample Painting 16",
-      "caption": "Oil on canvas | 70 × 50 cm | 2024",
-      "alt": "Abstract sample painting 16"
-    },
-    {
-      "image": "kassirer-17.jpg",
-      "title": "Sample Painting 17",
-      "caption": "Oil on canvas | 50 × 70 cm | 2025",
-      "alt": "Abstract sample painting 17"
-    },
-    {
-      "image": "kassirer-18.jpg",
-      "title": "Sample Painting 18",
-      "caption": "Oil on canvas | 80 × 80 cm | 2020",
-      "alt": "Abstract sample painting 18"
-    },
-    {
-      "image": "kassirer-19.jpg",
-      "title": "Sample Painting 19",
-      "caption": "Oil on canvas | 100 × 60 cm | 2021",
-      "alt": "Abstract sample painting 19"
-    },
-    {
-      "image": "kassirer-20.jpg",
-      "title": "Sample Painting 20",
-      "caption": "Oil on canvas | 60 × 75 cm | 2022",
-      "alt": "Abstract sample painting 20"
+      "id": "2023",
+      "title": "2023 – 2024",
+      "paintings": [
+        {
+          "image": "kassirer-17.jpg",
+          "title": "Sample Painting 17",
+          "caption": "Oil on canvas | 50 × 70 cm | 2025",
+          "alt": "Abstract sample painting 17"
+        },
+        {
+          "image": "kassirer-18.jpg",
+          "title": "Sample Painting 18",
+          "caption": "Oil on canvas | 80 × 80 cm | 2020",
+          "alt": "Abstract sample painting 18"
+        },
+        {
+          "image": "kassirer-19.jpg",
+          "title": "Sample Painting 19",
+          "caption": "Oil on canvas | 100 × 60 cm | 2021",
+          "alt": "Abstract sample painting 19"
+        },
+        {
+          "image": "kassirer-20.jpg",
+          "title": "Sample Painting 20",
+          "caption": "Oil on canvas | 60 × 75 cm | 2022",
+          "alt": "Abstract sample painting 20"
+        }
+      ]
     }
   ]
 }

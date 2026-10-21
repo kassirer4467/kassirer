@@ -1,5 +1,5 @@
-/* Gallery: reads data/paintings.json and builds the paginated grid and the viewer.
-   This file never needs editing to add or change paintings. */
+/* Gallery: reads data/paintings.json, builds the left menu, the 4-per-row grid and the viewer.
+   This file never needs editing to add paintings or galleries. */
 (function () {
   'use strict';
 
@@ -8,22 +8,56 @@
   var THUMB_DIR = 'images/thumbs/';
   var DEFAULT_PER_PAGE = 16;
 
-  var paintings = [], perPage = DEFAULT_PER_PAGE, page = 1, current = -1, lastFocus = null;
+  var galleries = [], gallery = null, paintings = [], perPage = DEFAULT_PER_PAGE, page = 1, current = -1, lastFocus = null;
 
   var $ = function (id) { return document.getElementById(id); };
-  var grid = $('gallery'), statusEl = $('status'), lb = $('lightbox');
+  var grid = $('gallery'), statusEl = $('status'), lb = $('lightbox'), menu = $('gallery-menu'), layout = $('layout');
   var lbImg = $('lb-img'), lbCap = $('lb-caption'), lbPrev = $('lb-prev'), lbNext = $('lb-next'), lbClose = $('lb-close');
   var pagers = document.querySelectorAll('.pager');
 
   // A bare filename is looked up in the images folder; a path or URL is used as-is.
   function resolve(dir, name) { return /^(https?:)?\/|^\.{0,2}\//.test(name) ? name : dir + encodeURI(name); }
-  function fullSrc(p) { return resolve(FULL_DIR, p.image); }
-  function thumbSrc(p) { return p.thumb ? resolve(THUMB_DIR, p.thumb) : fullSrc(p); }
+  function dirFor(base) { return gallery && gallery.folder ? base + gallery.folder.replace(/^\/+|\/+$/g, '') + '/' : base; }
+  function fullSrc(p) { return resolve(dirFor(FULL_DIR), p.image); }
+  function thumbSrc(p) { return p.thumb ? resolve(dirFor(THUMB_DIR), p.thumb) : fullSrc(p); }
   function altText(p) { return p.alt || p.title || 'Painting'; }
   function pageCount() { return Math.max(1, Math.ceil(paintings.length / perPage)); }
+  function params() { return new URLSearchParams(location.search); }
   function pageFromUrl() {
-    var n = parseInt(new URLSearchParams(location.search).get('page'), 10);
+    var n = parseInt(params().get('page'), 10);
     return n >= 1 && n <= pageCount() ? n : 1;
+  }
+  function galleryFromUrl() {
+    var id = params().get('gallery');
+    return galleries.filter(function (g) { return g._id === id; })[0] || galleries[0];
+  }
+  function urlFor(n) {
+    var q = new URLSearchParams();
+    q.set('gallery', gallery._id);
+    if (n > 1) q.set('page', n);
+    return '?' + q.toString();
+  }
+
+  /* ---------- Left menu ---------- */
+  function renderMenu(title) {
+    menu.textContent = '';
+    if (galleries.length < 2) { menu.hidden = true; layout.classList.add('no-menu'); return; }
+    var h = document.createElement('h2');
+    h.className = 'side-title';
+    h.textContent = title;
+    var ul = document.createElement('ul');
+    galleries.forEach(function (g) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '?gallery=' + encodeURIComponent(g._id);
+      a.textContent = g.title || g._id;
+      a.dir = 'auto';
+      if (g === gallery) a.setAttribute('aria-current', 'page');
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    menu.appendChild(h);
+    menu.appendChild(ul);
   }
 
   /* ---------- Grid ---------- */
@@ -42,37 +76,22 @@
       img.decoding = 'async';
       img.src = thumbSrc(p);
       img.alt = altText(p);
+      if (p.focus) img.style.objectPosition = p.focus;   // optional crop focus, e.g. "50% 30%"
       btn.appendChild(img);
       li.appendChild(btn);
       grid.appendChild(li);
     });
-    statusEl.textContent = paintings.length ? '' : 'No paintings yet. Add entries to data/paintings.json.';
+    statusEl.textContent = paintings.length ? '' : 'No paintings in this gallery yet. Add entries to data/paintings.json.';
     renderPagers();
   }
 
   function pageLink(n, label, extra) {
     var a = document.createElement('a');
-    a.href = '?page=' + n;
+    a.href = urlFor(n);
     a.dataset.page = n;
     a.textContent = label || n;
     if (extra) a.setAttribute('aria-label', extra);
     return a;
-  }
-  function renderPagers() {
-    var total = pageCount();
-    pagers.forEach(function (nav) {
-      nav.textContent = '';
-      if (total < 2) return;
-      var prev = page > 1 ? pageLink(page - 1, 'Previous', 'Previous page') : disabled('Previous');
-      var next = page < total ? pageLink(page + 1, 'Next', 'Next page') : disabled('Next');
-      nav.appendChild(prev);
-      for (var n = 1; n <= total; n++) {
-        var a = pageLink(n, n, 'Page ' + n);
-        if (n === page) a.setAttribute('aria-current', 'page');
-        nav.appendChild(a);
-      }
-      nav.appendChild(next);
-    });
   }
   function disabled(label) {
     var s = document.createElement('span');
@@ -80,13 +99,25 @@
     s.textContent = label;
     return s;
   }
+  function renderPagers() {
+    var total = pageCount();
+    pagers.forEach(function (nav) {
+      nav.textContent = '';
+      if (total < 2) return;
+      nav.appendChild(page > 1 ? pageLink(page - 1, 'Previous', 'Previous page') : disabled('Previous'));
+      for (var n = 1; n <= total; n++) {
+        var a = pageLink(n, n, 'Page ' + n);
+        if (n === page) a.setAttribute('aria-current', 'page');
+        nav.appendChild(a);
+      }
+      nav.appendChild(page < total ? pageLink(page + 1, 'Next', 'Next page') : disabled('Next'));
+    });
+  }
 
   function goToPage(n, push) {
     page = n;
     renderGrid();
-    var url = n === 1 ? location.pathname : '?page=' + n;
-    if (push === 'push') history.pushState({}, '', url);
-    else if (push === 'replace') history.replaceState({}, '', url);
+    if (push === 'push') history.pushState({}, '', urlFor(n));
   }
 
   document.addEventListener('click', function (e) {
@@ -119,7 +150,7 @@
     lbImg.onload = function () { lbImg.classList.remove('is-loading'); };
     lbImg.onerror = function () { lbImg.classList.remove('is-loading'); };
     lbImg.alt = altText(p);
-    lbImg.src = fullSrc(p);              // full-resolution file loads only now
+    lbImg.src = fullSrc(p);              // the large file loads only now
 
     lbCap.textContent = '';
     if (p.title) { var t = document.createElement('span'); t.className = 'lb-title'; t.textContent = p.title; t.dir = 'auto'; lbCap.appendChild(t); }
@@ -136,7 +167,7 @@
     lb.hidden = true;
     document.body.classList.remove('lb-open');
     lbImg.removeAttribute('src');
-    // If the visitor browsed to a painting on another gallery page, follow it.
+    // If the visitor browsed to a painting on another page of this gallery, follow it.
     var target = Math.floor(current / perPage) + 1;
     if (target !== page) goToPage(target, 'push');
     var el = grid.querySelector('[data-index="' + current + '"]');
@@ -161,8 +192,9 @@
       var next = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === f.length - 1 ? 0 : i + 1);
       f[next].focus();
       e.preventDefault();
+      return;
     } else return;
-    if (e.key !== 'Tab') e.preventDefault();
+    e.preventDefault();
   });
 
   var tx = 0, ty = 0;
@@ -176,9 +208,20 @@
   fetch(DATA_URL)
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {
-      paintings = (Array.isArray(data) ? data : data.paintings || []).filter(function (p) { return p && p.image; });
-      perPage = (!Array.isArray(data) && parseInt(data.perPage, 10)) || DEFAULT_PER_PAGE;
+      var list = Array.isArray(data.galleries) ? data.galleries
+        : [{ id: 'all', title: 'Gallery', paintings: Array.isArray(data) ? data : (data.paintings || []) }];
+      galleries = list.filter(Boolean).map(function (g, i) {
+        g.paintings = (g.paintings || []).filter(function (p) { return p && p.image; });
+        g._id = String(g.id != null ? g.id : i + 1);
+        return g;
+      });
+      if (!galleries.length) throw new Error('no galleries');
+      perPage = parseInt(data.perPage, 10) || DEFAULT_PER_PAGE;
+      gallery = galleryFromUrl();
+      paintings = gallery.paintings;
       page = pageFromUrl();
+      $('gallery-title').textContent = gallery.title || 'Gallery';
+      renderMenu(data.menuTitle || 'Galleries');
       renderGrid();
     })
     .catch(function () {
