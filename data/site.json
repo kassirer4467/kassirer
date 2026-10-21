@@ -1,6 +1,6 @@
 {
-  "siteTitle": "Artist Name",
-  "footer": "© Artist Name",
+  "siteTitle": "Moshe Kassirer",
+  "footer": "© Moshe Kassirer",
   "menu": [
     { "label": "Gallery", "href": "index.html" }
   ]

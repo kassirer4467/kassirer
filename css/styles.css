@@ -3,7 +3,7 @@
   --ink: #1c1c1c;
   --muted: #6b6b6b;
   --line: #e2e2e0;
-  --gap: 2rem;
+  --gap: 15px;
   --thumb-w: 170px;              /* thumbnail size: images are cropped to fill it */
   --thumb-ratio: 170 / 150;      /* keep equal to width / height above */
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
@@ -18,10 +18,10 @@ a { color: inherit; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
 /* Header */
-.site-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem 2rem;
+.site-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 1rem 2rem;
   max-width: 1400px; margin: 0 auto; padding: 2rem 2rem 1.25rem; }
 .site-title { font-family: var(--serif); font-size: 1.5rem; letter-spacing: .04em; text-decoration: none; }
-.site-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; }
+.site-nav { grid-column: 2; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.75rem; }
 .site-nav a { text-decoration: none; color: var(--muted); font-size: .95rem; padding: .25rem 0; border-bottom: 1px solid transparent; }
 .site-nav a:hover { color: var(--ink); }
 .site-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
@@ -55,16 +55,17 @@ a { color: inherit; }
 .site-footer { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem 2.5rem; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
 
 @media (max-width: 899px) {
+  .site-header { grid-template-columns: minmax(0, 1fr); }
+  .site-nav { grid-column: 1; }
   .layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
   .side ul { display: flex; flex-wrap: wrap; gap: 0 .75rem; }
   .side-title, .side a { padding-left: 0; padding-right: 0; }
   .side a { padding: .3rem 0; }
   .side a[aria-current="page"] { box-shadow: none; border-bottom: 1px solid var(--ink); }
-  .grid { --gap: 1.5rem; }
 }
 @media (max-width: 699px) { .grid { grid-template-columns: repeat(3, minmax(0, var(--thumb-w))); } }
 @media (max-width: 599px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, var(--thumb-w))); gap: 1rem; }
+  .grid { grid-template-columns: repeat(2, minmax(0, var(--thumb-w))); }
   .site-header, .page, .site-footer { padding-left: 1rem; padding-right: 1rem; }
 }
 
