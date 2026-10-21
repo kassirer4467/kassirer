@@ -155,7 +155,6 @@
     lbCap.textContent = '';
     if (p.title) { var t = document.createElement('span'); t.className = 'lb-title'; t.textContent = p.title; t.dir = 'auto'; lbCap.appendChild(t); }
     if (p.caption) { var c = document.createElement('span'); c.textContent = p.caption; c.dir = 'auto'; lbCap.appendChild(c); }
-    var n = document.createElement('span'); n.className = 'lb-count'; n.textContent = (index + 1) + ' / ' + paintings.length; lbCap.appendChild(n);
 
     lbPrev.disabled = index === 0;
     lbNext.disabled = index === paintings.length - 1;
