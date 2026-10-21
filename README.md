@@ -64,3 +64,7 @@ Upload the whole folder to any static host (FTP/cPanel, Netlify, GitHub Pages…
 
 - The sample images in `images/` are generated placeholders. Delete them and the sample entries before launch.
 - Original images are never resized or altered by the site. The viewer scales them down only on screen, and only when they don't fit.
+
+## Search engines
+
+`index.html` contains `<meta name="robots" content="noindex, nofollow">`, which asks Google and other search engines not to list the site. Copy this line into the `<head>` of every page you add later. To allow indexing when you launch, delete that line. Do not also add a `robots.txt` that blocks everything: it stops crawlers from reading the noindex tag, which can make the listing less reliable. This is a request that well-behaved search engines follow; it does not make the site private.
