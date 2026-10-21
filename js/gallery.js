@@ -15,6 +15,13 @@
   var lbImg = $('lb-img'), lbCap = $('lb-caption'), lbPrev = $('lb-prev'), lbNext = $('lb-next'), lbClose = $('lb-close');
   var pagers = document.querySelectorAll('.pager');
 
+  // Wrap the large image in a frame so the "sold" marker can sit on the painting's corner.
+  var lbFrame = document.createElement('div');
+  lbFrame.className = 'lb-frame';
+  lbImg.parentNode.insertBefore(lbFrame, lbImg);
+  lbFrame.appendChild(lbImg);
+  function isSold(p) { return p.sold === true; }
+
   // A bare filename is looked up in the images folder; a path or URL is used as-is.
   function resolve(dir, name) { return /^(https?:)?\/|^\.{0,2}\//.test(name) ? name : dir + encodeURI(name); }
   function dirFor(base) { return gallery && gallery.folder ? base + gallery.folder.replace(/^\/+|\/+$/g, '') + '/' : base; }
@@ -70,7 +77,8 @@
       btn.type = 'button';
       btn.className = 'thumb';
       btn.dataset.index = start + i;
-      btn.setAttribute('aria-label', 'View larger: ' + (p.title || altText(p)));
+      btn.setAttribute('aria-label', 'View larger: ' + (p.title || altText(p)) + (isSold(p) ? ' (sold)' : ''));
+      if (isSold(p)) btn.classList.add('is-sold');
       var img = document.createElement('img');
       img.loading = 'lazy';
       img.decoding = 'async';
@@ -149,7 +157,8 @@
     lbImg.classList.add('is-loading');
     lbImg.onload = function () { lbImg.classList.remove('is-loading'); };
     lbImg.onerror = function () { lbImg.classList.remove('is-loading'); };
-    lbImg.alt = altText(p);
+    lbImg.alt = altText(p) + (isSold(p) ? ' (sold)' : '');
+    lbFrame.classList.toggle('is-sold', isSold(p));
     lbImg.src = fullSrc(p);              // the large file loads only now
 
     lbCap.textContent = '';
