@@ -1,0 +1,7 @@
+{
+  "siteTitle": "Artist Name",
+  "footer": "© Artist Name",
+  "menu": [
+    { "label": "Gallery", "href": "index.html" }
+  ]
+}
