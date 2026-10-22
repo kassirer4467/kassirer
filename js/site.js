@@ -1,5 +1,6 @@
 /* Site chrome: title, top menu and footer are read from data/site.json.
-   To add a page later, add an entry to "menu" there. */
+   To add a page, add an entry to "menu" there. "match" lists extra files that
+   should highlight the same menu item (e.g. the English version of a page). */
 (function () {
   'use strict';
   fetch('data/site.json')
@@ -8,14 +9,14 @@
       var title = document.getElementById('site-title');
       var nav = document.getElementById('site-nav');
       var footer = document.getElementById('site-footer');
-      if (cfg.siteTitle) { title.textContent = cfg.siteTitle; document.title = 'Gallery — ' + cfg.siteTitle; }
+      if (cfg.siteTitle) { title.textContent = cfg.siteTitle; document.title = document.title + ' — ' + cfg.siteTitle; }
       if (footer && cfg.footer) footer.textContent = cfg.footer;
       var here = location.pathname.split('/').pop() || 'index.html';
       (cfg.menu || []).forEach(function (item) {
         var a = document.createElement('a');
         a.href = item.href;
         a.textContent = item.label;
-        if (item.href === here) a.setAttribute('aria-current', 'page');
+        if (item.href === here || (item.match || []).indexOf(here) !== -1) a.setAttribute('aria-current', 'page');
         nav.appendChild(a);
       });
     })
