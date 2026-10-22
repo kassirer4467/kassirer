@@ -74,6 +74,28 @@ a { color: inherit; }
   .site-header, .page, .site-footer { padding-left: 1rem; padding-right: 1rem; }
 }
 
+/* About pages (about-he.html, about-en.html) */
+.about-inner { max-width: 56rem; margin: 0 auto; }
+.lang-bar { display: flex; margin: 0 0 2.5rem; }
+.lang-btn { margin-inline-start: auto; padding: .4rem 1.1rem; border: 1px solid var(--ink); color: var(--ink); text-decoration: none; font-size: .9rem; letter-spacing: .04em; }
+.lang-btn:hover, .lang-btn:focus-visible { background: var(--ink); color: var(--bg); }
+.statement { margin: 0 0 3.5rem; font-family: var(--serif); font-size: 1.35rem; line-height: 1.7; }
+.about h2 { margin: 0 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); font-family: var(--serif); font-size: 1.15rem; font-weight: 400; letter-spacing: .06em; }
+.cv-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem; margin-bottom: 3.5rem; }
+.cv { flex: 1; min-width: 0; }
+.cv-list, .exh { list-style: none; margin: 0; padding: 0; }
+.cv-list li { padding: .25rem 0; }
+.portrait { flex: none; display: block; width: 261px; max-width: 100%; height: auto; }
+.exh { margin-bottom: 3.5rem; }
+.exh li { margin-bottom: 1.1rem; }
+.exh .t, .exh .m { display: block; }
+.exh .m { color: var(--muted); font-size: .92rem; }
+@media (max-width: 699px) {
+  .cv-row { flex-direction: column; gap: 1.5rem; }
+  .portrait { width: 220px; align-self: center; }
+  .statement { font-size: 1.2rem; }
+}
+
 /* Lightbox */
 .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(14, 14, 14, .95); color: #eee;
   display: flex; align-items: center; justify-content: center; }
