@@ -2,6 +2,7 @@
   "siteTitle": "Moshe Kassirer",
   "footer": "© Moshe Kassirer",
   "menu": [
-    { "label": "Gallery", "href": "index.html" }
+    { "label": "Gallery", "href": "index.html" },
+    { "label": "About", "href": "about-he.html", "match": ["about-en.html"] }
   ]
 }
