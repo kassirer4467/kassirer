@@ -4,8 +4,8 @@
   --muted: #6b6b6b;
   --line: #e2e2e0;
   --gap: 15px;
-  --thumb-w: 170px;              /* thumbnail size: images are cropped to fill it */
-  --thumb-ratio: 170 / 150;      /* keep equal to width / height above */
+  --thumb-w: 192px;              /* thumbnail size: images are cropped to fill it */
+  --thumb-ratio: 192 / 170;      /* keep equal to width / height above */
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
 }
