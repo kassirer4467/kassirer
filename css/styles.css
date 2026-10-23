@@ -36,10 +36,10 @@ a { color: inherit; }
 .pager .is-disabled { opacity: .35; }
 
 /* Left menu + content */
-.layout { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 3rem; align-items: start; }
+.layout { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 2rem; align-items: start; }
 .layout.no-menu { grid-template-columns: minmax(0, 1fr); }
 .side[hidden] { display: none; }
-.side-title { margin: 0 0 .75rem; padding-left: .75rem; font-family: var(--serif); font-size: 1.1rem; font-weight: 400; letter-spacing: .04em; }
+.side-title { margin: 0 0 .75rem; padding-left: .75rem; font-family: var(--serif); font-size: 1.1rem; font-weight: 400; letter-spacing: .05em; }
 .side ul { list-style: none; margin: 0; padding: 0; }
 .side a { display: block; padding: .3rem .75rem; text-decoration: none; color: var(--muted); font-size: .95rem; }
 .side a:hover { color: var(--ink); }
