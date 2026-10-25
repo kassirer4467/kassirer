@@ -3,6 +3,7 @@
   "footer": "© Moshe Kassirer",
   "menu": [
     { "label": "Gallery", "href": "index.html" },
-    { "label": "About", "href": "about-he.html", "match": ["about-en.html"] }
+    { "label": "About", "href": "about-he.html", "match": ["about-en.html"] },
+    { "label": "Contact", "href": "contact.html" }
   ]
 }
