@@ -39,7 +39,8 @@
     }
     if (form.elements._honey && form.elements._honey.value) {          // spam trap (never sent)
       e.preventDefault();
-      say('Sorry, the message could not be sent. Please email ' + mail + ' directly.', 'is-error');
+      form.elements._honey.value = '';
+      say('The spam check stopped this message. Please press Send again, or email ' + mail + ' directly.', 'is-error');
       return;
     }
     form.elements._next.value = location.origin + location.pathname + '?sent=1';   // where FormSubmit sends the visitor back
