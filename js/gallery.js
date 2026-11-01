@@ -4,6 +4,9 @@
   'use strict';
 
   var DATA_URL = 'data/paintings.json';
+  var SALE_URL = 'data/sale.json';
+  // sale.html sets <body data-list="sale">: it shows ONE list (data/sale.json) with no page limit.
+  var SALE = document.body.getAttribute('data-list') === 'sale';
   var FULL_DIR = 'images/full/';
   var THUMB_DIR = 'images/thumbs/';
   var DEFAULT_PER_PAGE = 16;
@@ -24,9 +27,12 @@
 
   // A bare filename is looked up in the images folder; a path or URL is used as-is.
   function resolve(dir, name) { return /^(https?:)?\/|^\.{0,2}\//.test(name) ? name : dir + encodeURI(name); }
-  function dirFor(base) { return gallery && gallery.folder ? base + gallery.folder.replace(/^\/+|\/+$/g, '') + '/' : base; }
-  function fullSrc(p) { return resolve(dirFor(FULL_DIR), p.image); }
-  function thumbSrc(p) { return p.thumb ? resolve(dirFor(THUMB_DIR), p.thumb) : fullSrc(p); }
+  function dirFor(base, p) {
+    var f = p && p._folder != null ? p._folder : (gallery && gallery.folder);
+    return f ? base + String(f).replace(/^\/+|\/+$/g, '') + '/' : base;
+  }
+  function fullSrc(p) { return resolve(dirFor(FULL_DIR, p), p.image); }
+  function thumbSrc(p) { return p.thumb ? resolve(dirFor(THUMB_DIR, p), p.thumb) : fullSrc(p); }
   function altText(p) { return p.alt || p.title || 'Painting'; }
   function pageCount() { return Math.max(1, Math.ceil(paintings.length / perPage)); }
   function params() { return new URLSearchParams(location.search); }
@@ -48,6 +54,13 @@
   /* ---------- Left menu ---------- */
   function renderMenu(title) {
     menu.textContent = '';
+    if (SALE) {
+      var st = document.createElement('h2');
+      st.className = 'side-title';
+      st.textContent = gallery.title || 'Sale';
+      menu.appendChild(st);
+      return;
+    }
     if (galleries.length < 2) { menu.hidden = true; layout.classList.add('no-menu'); return; }
     var h = document.createElement('h2');
     h.className = 'side-title';
@@ -89,7 +102,7 @@
       li.appendChild(btn);
       grid.appendChild(li);
     });
-    statusEl.textContent = paintings.length ? '' : 'No paintings in this gallery yet. Add entries to data/paintings.json.';
+    statusEl.textContent = paintings.length ? '' : 'No paintings yet. Add entries to ' + (SALE ? 'data/sale.json' : 'data/paintings.json') + '.';
     renderPagers();
   }
 
@@ -213,9 +226,34 @@
   }, { passive: true });
 
   /* ---------- Load ---------- */
-  fetch(DATA_URL)
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (data) {
+  function getJSON(url) {
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); });
+  }
+
+  // Sale list: each entry is {"image": "..."} plus optional fields. If the image is also in a Gallery, that
+  // painting's title/caption/alt/sold are used automatically; any non-empty field in the Sale entry overrides them.
+  function buildSale(sale, gals) {
+    var index = {};
+    gals.forEach(function (g) {
+      g.paintings.forEach(function (p) {
+        if (!Object.prototype.hasOwnProperty.call(index, p.image)) index[p.image] = { p: p, folder: g.folder };
+      });
+    });
+    var items = (Array.isArray(sale) ? sale : (sale.paintings || [])).filter(function (e) { return e && e.image; }).map(function (e) {
+      var out = {}, base = Object.prototype.hasOwnProperty.call(index, e.image) ? index[e.image] : null, k;
+      if (base) {
+        for (k in base.p) out[k] = base.p[k];
+        if (base.folder != null) out._folder = base.folder;
+      }
+      for (k in e) if (e[k] !== '' && e[k] != null) out[k] = e[k];
+      return out;
+    });
+    return { _id: 'sale', title: (!Array.isArray(sale) && sale.title) || 'Sale', paintings: items };
+  }
+
+  Promise.all([getJSON(DATA_URL), SALE ? getJSON(SALE_URL) : null])
+    .then(function (res) {
+      var data = res[0];
       var list = Array.isArray(data.galleries) ? data.galleries
         : [{ id: 'all', title: 'Gallery', paintings: Array.isArray(data) ? data : (data.paintings || []) }];
       galleries = list.filter(Boolean).map(function (g, i) {
@@ -224,7 +262,8 @@
         return g;
       });
       if (!galleries.length) throw new Error('no galleries');
-      perPage = parseInt(data.perPage, 10) || DEFAULT_PER_PAGE;
+      if (SALE) galleries = [buildSale(res[1], galleries)];
+      perPage = SALE ? 1e9 : (parseInt(data.perPage, 10) || DEFAULT_PER_PAGE);   // Sale: everything on one page
       gallery = galleryFromUrl();
       paintings = gallery.paintings;
       page = pageFromUrl();
@@ -233,6 +272,6 @@
       renderGrid();
     })
     .catch(function () {
-      statusEl.textContent = 'Could not load data/paintings.json. Check that the file exists and is valid JSON (and serve the site over http, not file://).';
+      statusEl.textContent = 'Could not load ' + (SALE ? 'data/sale.json or ' : '') + 'data/paintings.json. Check that the files exist and are valid JSON (and serve the site over http, not file://).';
     });
 })();
