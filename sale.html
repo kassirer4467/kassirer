@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>Sale</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/site.js" defer></script>
+  <script src="js/gallery.js" defer></script>
+</head>
+<body data-list="sale">
+  <header class="site-header">
+    <a class="site-title" id="site-title" href="index.html">Moshe Kassirer</a>
+    <nav id="site-nav" class="site-nav" aria-label="Main"></nav>
+  </header>
+
+  <main class="page">
+    <div class="layout" id="layout">
+      <nav id="gallery-menu" class="side" aria-label="Sale"></nav>
+      <section>
+        <h1 id="gallery-title" class="visually-hidden">Sale</h1>
+        <nav class="pager" aria-label="Pages"></nav>
+        <ul id="gallery" class="grid"></ul>
+        <p id="status" class="status" role="status">Loading paintings…</p>
+        <nav class="pager" aria-label="Gallery pages"></nav>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Painting viewer" hidden>
+    <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close viewer">&times;</button>
+    <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Previous painting">&#8249;</button>
+    <figure class="lb-figure">
+      <img id="lb-img" class="lb-img" alt="">
+      <figcaption class="lb-caption" id="lb-caption"></figcaption>
+    </figure>
+    <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Next painting">&#8250;</button>
+  </div>
+</body>
+</html>
